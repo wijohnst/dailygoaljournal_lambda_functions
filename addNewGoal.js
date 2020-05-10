@@ -8,13 +8,15 @@ exports.handler = async (event, context) => {
   let responseBody = "";
   let statusCode = 0;
 
-  const {id, description} = JSON.parse(event.body);
+  const {id, description, creationDate, benchmarks} = JSON.parse(event.body);
 
   const params = {
     TableName: "Goals",
-    Goal: {
+    Item: {
       id: id,
-      description: description
+      description : description,
+      creationDate: creationDate,
+      benchmarks : benchmarks
   }
 };
 
@@ -32,7 +34,8 @@ exports.handler = async (event, context) => {
   const response ={
     statusCode: statusCode,
     headers: {
-      "Content-Type" : "applications/json"
+      "Content-Type" : "applications/json",
+      "access-control-allow-origin" : "*",
     },
     body: responseBody
   }
